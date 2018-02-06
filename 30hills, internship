@@ -1,0 +1,92 @@
+<script> 
+class Osoba{
+	constructor(id,firstName,surname,age,gender,friends){
+		this._id = id ;
+		this._firstName = firstName;
+		this._surname = surname;
+		this._age = age;
+		this._gender = gender;
+		this._friends = friends;
+		}
+
+		get id() {
+			return this._id;
+		}
+		set id(id){
+			this._id = id;
+		}
+		get firstName() {
+			return this._firstName;
+		}
+		set firstName(firstName){
+			this._firstName = firstName;
+		}
+		get surname() {
+			return this._surname;
+		}
+		set surname(surname){
+			this._surname = surname;
+		}
+		get age() {
+			return this._age;
+		}
+		set age(age){
+			this._age = age;
+		}
+
+		get gender() {
+			return this._gender;
+		}
+		set gender(gender){
+			this._gender = gender;
+		}
+
+		get friends() {
+			return this._friends;
+		}
+		set friends(friends){
+			this._friends = friends;
+		}
+
+	}
+	
+	var osobe = [];
+
+	
+       $(function() {
+   $.getJSON('https://raw.githubusercontent.com/Steffzz/damnz/master/data.json', function(data) 
+   		{
+			var json = jQuery.parseJSON(JSON.stringify(data));
+		
+            for(person of json)
+            {
+
+                var id = person['id']  ;
+                var firstName = person['firstName'] ;
+                var surname = person['surname'] ;
+                var age = person['age'] ;
+                var gender= person['gender'] ;	
+				console.log("json is:",JSON.stringify(json,undefined,3));
+				var friends = person['friends'].map(
+  				function(friendId){
+   				 console.log("friendID is:",friendId);
+    			var friend = json.find(function(person){return person.id===friendId;});
+    			console.log("friend is:",JSON.stringify(friend,undefined,2));
+    			return {
+     					 firstName:friend.firstName,
+     					 surname:friend.surname
+    										}
+ 			 						}
+					);
+                
+            	var x = new Osoba(id,firstName,surname,age,gender,friends); 
+            	osobe.push(x);
+            	
+            	
+            }     
+            console.log(osobe);
+            document.write(JSON.stringify(osobe[0]));
+            
+         }) 
+    });
+</script>
